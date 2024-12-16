@@ -1,0 +1,303 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#terain-and-form {
+    display: flex;
+    height: 100vh;
+}
+
+.cards {
+    width: 36%;
+    background-color: rgb(103, 186, 103);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    height: fit-content;
+}
+
+.add-button {
+    background-color: #28a745;
+    width: 250px;
+    height: 40px;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 125px;
+    transition: background-color 0.3s;
+}
+
+.add-button:hover {
+    background-color: #218838;
+}
+
+#form {
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+    height: max-content;
+}
+#form #inputs-gk{
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 330px;
+    margin: 20px auto;
+    height: max-content;
+    display: none;
+}
+
+#form #inputs-rest{
+    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 330px;
+    margin: 20px auto;
+    height: max-content;
+    display: none;
+}
+
+#form #inputs-gk input {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+#form #inputs-rest input {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+#form label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-top: inherit;
+}
+
+#form input[type="text"],
+#form input[type="file"],#form input[type="number"] {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+#form select {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+#form option {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+#form input[type="text"]:focus,
+#form input[type="file"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+#form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#form button[type="submit"]:active {
+    background-color: #00408b;
+}
+
+.card-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.terain {
+    background-image:url(../img/stadium_background.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 5px 5px 5px 5px;
+    width: 62%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+.card-player {
+    width: 150px; 
+    height: 150px; 
+    background-image: url('../img/badge_gold.webp'); 
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-position: center;  
+    border-radius: 10px; 
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card-image img{
+    width: 60px;
+    height: 70px;
+    margin-top: 25px;
+    z-index: 1;
+}
+.card-image {
+    display: flex;
+}
+.reting{
+    margin-top: 30px;
+    width: 10px;
+    height: fit-content;
+    z-index: 2;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 10px;
+}
+.card-statics {
+
+    display: flex;
+    width: fit-content;
+    gap: 2px;
+    margin-left: 1px;
+}
+.card-statics .pace, .shooting, .passing,
+.dribbling, .defending, .physical ,.name{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 7px;
+    text-align: center;
+}
+.card-team img{
+    width: 15px;
+    height: 12px;
+    margin-bottom: 2px;
+}
+.card-team{
+    width: fit-content;
+    height: fit-content;
+    
+}
+.attack , .milieu{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: end;
+    width: 55vw;
+}
+.deffence{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 10px;
+    width: 69vw;
+    margin-top: 45px;
+}
+.goal-keaper{
+    display: flex;
+    justify-content: center;
+    width: 62vw;
+    margin-top: 20px;
+}
+.parent-formation{
+    width: 60vw;
+}
+.substition{
+    background-color: rgb(134, 195, 134);
+    margin: 5px 5px 5px 5px;
+    border-radius: 15px;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.all-players{
+    background-color: rgb(134, 195, 134);
+    margin: 5px 5px 5px 5px;
+    border-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 62.5%;
+}
+.cards .substition h1{
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 8px;
+    margin-bottom: 10px; 
+    text-align: center;
+}
+.all-players h1{
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 8px;
+    margin-bottom: 10px; 
+    text-align: center;
+}
+.substition .card-substition{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.card-player.is-dragging {
+    background-color: orangered;
+    color: white;
+}
+.delete-btn{
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 50px;
+    height: 15px;
+    font-size: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
