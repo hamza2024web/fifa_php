@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Dashboard Container -->
+  <div class="flex h-screen">
+    
+    <!-- Sidebar -->
+    <aside class="w-1/4 bg-gray-800 text-white flex flex-col">
+      <div class="p-6 text-2xl font-semibold text-center border-b border-gray-700">
+        Management Menu
+      </div>
+      <nav class="flex flex-col flex-1 p-4 space-y-4">
+        <button onclick="showSection('player')"
+                class="w-full py-2 px-4 text-left rounded-lg bg-gray-700 hover:bg-gray-600 transition">
+          Player Management
+        </button>
+        <button onclick="showSection('nationality')"
+                class="w-full py-2 px-4 text-left rounded-lg bg-gray-700 hover:bg-gray-600 transition">
+          Nationality Management
+        </button>
+        <button onclick="showSection('club')"
+                class="w-full py-2 px-4 text-left rounded-lg bg-gray-700 hover:bg-gray-600 transition">
+          Club Management
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+      
+      <!-- Header -->
+      <header class="bg-white shadow p-4">
+        <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+      </header>
+      
+      <!-- Content -->
+      <main id="main-content" class="flex-1 p-6 bg-gray-50">
+        <!-- Default content -->
+        <div id="default" class="text-gray-600">
+          <h2 class="text-2xl font-semibold mb-4">Welcome to the Dashboard</h2>
+          <p>Select an option from the sidebar to manage players, nationalities, or clubs.</p>
+        </div>
+        <!-- Player Management Section -->
+        <div id="player" class="hidden">
+          <h2 class="text-2xl font-semibold mb-4 text-gray-800">Player Management</h2>
+          <p>Here you can manage all players.</p>
+        </div>
+        <!-- Nationality Management Section -->
+        <div id="nationality" class="hidden">
+          <h2 class="text-2xl font-semibold mb-4 text-gray-800">Nationality Management</h2>
+          <p>Here you can manage nationalities.</p>
+        </div>
+        <!-- Club Management Section -->
+        <div id="club" class="hidden">
+          <h2 class="text-2xl font-semibold mb-4 text-gray-800">Club Management</h2>
+          <p>Here you can manage clubs.</p>
+        </div>
+      </main>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function showSection(section) {
+      // Hide all sections
+      document.querySelectorAll('#main-content > div').forEach(div => div.classList.add('hidden'));
+      // Show the selected section
+      document.getElementById(section).classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
