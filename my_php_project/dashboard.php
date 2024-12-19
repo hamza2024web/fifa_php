@@ -95,7 +95,6 @@
                         </tbody>
                     </table>
                 </div>
-                <?php include_once('./sections/player_section.php'); ?>
             </div>
 
             <!-- Nationality Management Section -->
@@ -139,7 +138,6 @@
                         </tbody>
                     </table>
                 </div>
-                <?php include_once('./sections/nationality_section.php'); ?>
             </div>
 
             <!-- Club Management Section -->
@@ -183,7 +181,6 @@
                         </tbody>
                     </table>
                 </div>
-                <?php include_once('./sections/club_section.php'); ?>
             </div>
 
             <!-- Add Player Section -->
@@ -239,6 +236,7 @@
                             <select id="status" name="status" class="w-full border p-2 rounded">
                                 <option value="principal">Principal</option>
                                 <option value="reserve">Reserve</option>
+                                <option value="all">All</option>
                             </select>
                         </div>
                     </div>
@@ -280,32 +278,27 @@
         $flag = $_FILES['flag']['name'];
         $logo = $_FILES['logo']['name'];
         
-        // Move uploaded files
-        move_uploaded_file($_FILES['image']['tmp_name'], "uploads/players/" . $image);
-        move_uploaded_file($_FILES['flag']['tmp_name'], "uploads/flags/" . $flag);
-        move_uploaded_file($_FILES['logo']['tmp_name'], "uploads/logos/" . $logo);
-        
         // Get other form data
-        $name = mysqli_real_escape_string($con, $_POST['name']);
-        $position = mysqli_real_escape_string($con, $_POST['position']);
-        $rating = mysqli_real_escape_string($con, $_POST['rating']);
-        $status = mysqli_real_escape_string($con, $_POST['status']);
-        $nationality = mysqli_real_escape_string($con, $_POST['nationality']);
-        $club = mysqli_real_escape_string($con, $_POST['club']);
+        $name = $_POST['name'];
+        $position = $_POST['position'];
+        $rating =  $_POST['rating'];
+        $status =  $_POST['status'];
+        $nationality = $_POST['nationality'];
+        $club = $_POST['club'];
 
         // Insert nationality
-        $nation = "INSERT INTO nationnality (name_nationnality, flag) VALUES ('$nationality', 'uploads/flags/$flag')";
+        $nation = "INSERT INTO nationnality (name_nationnality, flag) VALUES ('$nationality', '$flag')";
         mysqli_query($con, $nation);
         $nation_id = mysqli_insert_id($con);
 
         // Insert club
-        $club_query = "INSERT INTO club (name_club, logo) VALUES ('$club', 'uploads/logos/$logo')";
+        $club_query = "INSERT INTO club (name_club, logo) VALUES ('$club', '$logo')";
         mysqli_query($con, $club_query);
         $club_id = mysqli_insert_id($con);
 
         // Insert player
         $sql = "INSERT INTO player (nom_player, photo, positions, rating, statuus, nationnality_id, club_id) 
-                VALUES ('$name', 'uploads/players/$image', '$position', '$rating', '$status', $nation_id, $club_id)";
+                VALUES ('$name', '$image', '$position', '$rating', '$status', $nation_id, $club_id)";
         
         if(mysqli_query($con, $sql)) {
             echo "<script>alert('Player added successfully!'); window.location.href='dashboard.php';</script>";
