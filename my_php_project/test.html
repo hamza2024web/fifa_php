@@ -6,6 +6,7 @@
     <title>Player Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Smooth Fade Animation */
         .fade-in {
             animation: fadeIn 0.8s ease-in-out;
         }
@@ -16,13 +17,15 @@
     </style>
 </head>
 <body class="bg-gray-100 text-blue-800 font-sans">
+
     <!-- Full Container -->
     <div class="flex h-screen">
+
         <!-- Sidebar -->
         <aside class="w-72 bg-gray-800 text-white flex flex-col shadow-lg">
             <div class="text-center text-3xl font-bold py-6 bg-gray-900">⚡ Dashboard</div>
             <nav class="flex-1 space-y-4 px-4">
-                <button onclick="showSection('player')" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-700 transition">
+                <button onclick="showSection('player')" class="w-full flex items-center space-x-3 px-4 py-3  rounded-lg hover:bg-blue-700 transition">
                     <i class="fas fa-user"></i> <span>Player Management</span>
                 </button>
                 <button onclick="showSection('nationality')" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-green-500 transition">
@@ -31,7 +34,7 @@
                 <button onclick="showSection('club')" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-yellow-500 transition">
                     <i class="fas fa-building"></i> <span>Club Management</span>
                 </button>
-                <a href="./index.php"><button class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-yellow-500 transition">
+                <a href="./index.php"><button onclick="showSection('club')" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-yellow-500 transition">
                     <i class="fas fa-building"></i> <span>User</span>
                 </button></a>
                 <button onclick="showSection('add-player')" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-green-500 transition">
@@ -42,9 +45,9 @@
 
         <!-- Main Content -->
         <main class="flex-1 p-6 bg-white rounded-lg shadow-lg fade-in">
+
             <!-- Player Management Section -->
             <div id="player-section">
-                <!-- Your existing player section content remains unchanged -->
                 <h1 class="text-3xl font-bold text-gray-800 mb-6">Player Management</h1>
                 <div class="w-full max-w-6xl bg-white rounded-lg shadow-md overflow-hidden">
                     <table class="table-auto w-full border-collapse">
@@ -95,12 +98,10 @@
                         </tbody>
                     </table>
                 </div>
-                <?php include_once('./sections/player_section.php'); ?>
             </div>
 
             <!-- Nationality Management Section -->
-            <div id="nationality-section" style="display: none;">
-                <!-- Your existing nationality section content remains unchanged -->
+            <div id="nationality-section" class="hidden">
                 <h1 class="text-3xl font-bold text-gray-800 mb-6">Nationality Management</h1>
                 <div class="w-full max-w-6xl bg-white rounded-lg shadow-md overflow-hidden">
                     <table class="table-auto w-full border-collapse">
@@ -139,12 +140,10 @@
                         </tbody>
                     </table>
                 </div>
-                <?php include_once('./sections/nationality_section.php'); ?>
             </div>
 
             <!-- Club Management Section -->
-            <div id="club-section" style="display: none;">
-                <!-- Your existing club section content remains unchanged -->
+            <div id="club-section" class="hidden">
                 <h1 class="text-3xl font-bold text-gray-800 mb-6">Club Management</h1>
                 <div class="w-full max-w-6xl bg-white rounded-lg shadow-md overflow-hidden">
                     <table class="table-auto w-full border-collapse">
@@ -183,25 +182,56 @@
                         </tbody>
                     </table>
                 </div>
-                <?php include_once('./sections/club_section.php'); ?>
             </div>
+            <div id="add-player-section" class="hidden fade-in">
+                <?php 
+                    if (isset($_POST['submit'])) {
+                    $image = $_POST['image'];
+                    $name = $_POST['name'];
+                    $position = $_POST['position'];
+                    $rating = $_POST['rating'];
+                    $status = $_POST['status'];
+                    $nationnality = $_POST['nationality'];
+                    $flag = $_POST['flag'];
+                    $club = $_POST['club'];
+                    $logo = $_POST['logo'];
+                    if (!empty($image) && !empty($name) && !empty($position) && !empty($rating) && !empty($status)){
 
-            <!-- Add Player Section -->
-            <div id="add-player-section" style="display: none;">
+
+                        $nation = "INSERT INTO `nationnality`(`name_nationnality`, `flag`) 
+                        VALUES ('$nationnality','$flag')";
+                        mysqli_query($con, $nation);
+                        $nation_id = mysqli_insert_id($con);
+
+
+                        $club = "INSERT INTO `club`(`name_club` , `logo`) 
+                        VALUES ('$club','$logo')";
+                        mysqli_query($con, $club);
+                        $club_id = mysqli_insert_id($con);
+
+                        $sql = "INSERT INTO `player`(`nom_player`, `photo`, `positions`, `rating`, `statuus`, `nationality_id`,`club_id`) 
+                        VALUES ('$name','$image','$position','$rating','$status', $nation_id, $club_id)";
+                        mysqli_query($con, $sql);
+                        
+
+                    }
+                }
+                ?>
                 <h1 class="text-3xl font-bold text-gray-800 mb-6">Add New Player</h1>
-                <form class="bg-gray-100 p-6 rounded-lg shadow-md" method="POST" enctype="multipart/form-data">
+                <form class="bg-gray-100 p-6 rounded-lg shadow-md" method="POST">
+                    <!-- General Inputs -->
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="image" class="block text-sm font-medium">Image:</label>
-                            <input type="file" id="image" name="image" class="w-full border p-2 rounded">
+                            <input type="file" id="image" class="w-full border p-2 rounded" name="image">
                         </div>
                         <div>
                             <label for="name" class="block text-sm font-medium">Name:</label>
-                            <input type="text" placeholder="Enter the name..." id="name" name="name" class="w-full border p-2 rounded">
+                            <input type="text" placeholder="Enter the name..." id="name" class="w-full border p-2 rounded" name="name">
                         </div>
                         <div>
                             <label for="position" class="block text-sm font-medium">Position:</label>
-                            <select id="position" name="position" class="w-full border p-2 rounded">
+                            <select id="position" class="w-full border p-2 rounded" name="position">
                                 <option value="CF">CF</option>
                                 <option value="ST">ST</option>
                                 <option value="LW">LW</option>
@@ -216,103 +246,91 @@
                         </div>
                         <div>
                             <label for="nationality" class="block text-sm font-medium">Nationality:</label>
-                            <input type="text" placeholder="Enter nationality..." id="nationality" name="nationality" class="w-full border p-2 rounded">
+                            <input type="text" placeholder="Enter nationality..." id="nationality" class="w-full border p-2 rounded" name="nationality">
                         </div>
                         <div>
                             <label for="flag" class="block text-sm font-medium">Flag:</label>
-                            <input type="file" id="flag" name="flag" class="w-full border p-2 rounded">
+                            <input type="file" id="flag" class="w-full border p-2 rounded" name="flag">
                         </div>
                         <div>
                             <label for="club" class="block text-sm font-medium">Club:</label>
-                            <input type="text" placeholder="Enter club name..." id="club" name="club" class="w-full border p-2 rounded">
+                            <input type="text" placeholder="Enter club name..." id="club" class="w-full border p-2 rounded" name="club">
                         </div>
                         <div>
                             <label for="logo" class="block text-sm font-medium">Logo:</label>
-                            <input type="file" id="logo" name="logo" class="w-full border p-2 rounded">
+                            <input type="file" id="logo" class="w-full border p-2 rounded" name="logo">
                         </div>
                         <div>
                             <label for="rating" class="block text-sm font-medium">Rating:</label>
-                            <input type="number" placeholder="Enter rating..." id="rating" name="rating" class="w-full border p-2 rounded">
+                            <input type="number" placeholder="Enter rating..." id="rating" class="w-full border p-2 rounded" name="rating">
                         </div>
                         <div>
-                            <label for="status" class="block text-sm font-medium">Status:</label>
-                            <select id="status" name="status" class="w-full border p-2 rounded">
-                                <option value="principal">Principal</option>
-                                <option value="reserve">Reserve</option>
-                            </select>
+                            <label for="status" class="block text-sm font-medium">status:</label>
+                            <input type="text" placeholder="Enter status..." id="status" class="w-full border p-2 rounded" name="status">
                         </div>
+                        </div>
+                        <!-- <div id="inputs-gk">
+                        <label for="diving" class="block text-sm font-medium">Enter the diving:</label>
+                        <input type="number" placeholder="Please enter diving..." id="diving" name="diving" class="w-full border p-2 rounded">
+                        
+                        <label for="handling" class="block text-sm font-medium">Enter the handling:</label>
+                        <input type="number" placeholder="Please enter the handling..." id="handling" name="handling" class="w-full border p-2 rounded">
+                        
+                        <label for="kicking" class="block text-sm font-medium">Enter the kicking:</label>
+                        <input type="number" placeholder="Please enter the kicking..." id="kicking" name="kicking" class="w-full border p-2 rounded">
+                        
+                        <label for="reflexes" class="block text-sm font-medium">Enter the reflexes:</label>
+                        <input type="number" placeholder="Please enter the reflexes..." id="reflexes" name="reflexes" class="w-full border p-2 rounded">
+    
+                        <label for="speed" class="block text-sm font-medium">Enter the speed:</label>
+                        <input type="number" placeholder="Please enter the speed..." id="speed" name="speed" >
+                        
+                        <label for="positioning" class="block text-sm font-medium">Enter the positioning:</label>
+                        <input type="number" placeholder="Please enter the positioning..." id="positioning" name="positioning" class="w-full border p-2 rounded">
                     </div>
+                    <div id="inputs-rest">
+                        <label for="pace" class="block text-sm font-medium">Enter the pace:</label>
+                        <input type="number" placeholder="Please enter pace..." id="pace" name="pace" class="w-full border p-2 rounded">
+                        
+                        <label for="shooting" class="block text-sm font-medium">Enter the shooting:</label>
+                        <input type="number" placeholder="Please enter the shooting..." id="shooting" name="shooting" class="w-full border p-2 rounded">
+                        
+                        <label for="passing" class="block text-sm font-medium">Enter the passing:</label>
+                        <input type="number" placeholder="Please enter the passing..." id="passing" name="passing" class="w-full border p-2 rounded">
+                        
+                        <label for="dribbling" class="block text-sm font-medium">Enter the dribbling:</label>
+                        <input type="number" placeholder="Please enter the dribbling..." id="dribbling" name="dribbling" class="w-full border p-2 rounded">
+    
+                        <label for="defending" class="block text-sm font-medium">Enter the defending:</label>
+                        <input type="number" placeholder="Please enter the defending..." id="defending" name="defending" class="w-full border p-2 rounded">
+                        
+                        <label for="physical" class="block text-sm font-medium">Enter the physical:</label>
+                        <input type="number" placeholder="Please enter the physical..." id="physical" name="physical" class="w-full border p-2 rounded">
+                    </div> -->
 
+                    <!-- Buttons -->
                     <div class="mt-6 flex justify-end">
                         <button type="reset" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">Reset</button>
-                        <button type="submit" name="submit" class="ml-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">Add Player</button>
+                        <button type="submit" class="ml-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition" name="submit">Add Player</button>
                     </div>
                 </form>
             </div>
+
         </main>
     </div>
 
     <script>
-        // Fixed JavaScript function for section switching
-        function showSection(sectionId) {
-            // Hide all sections first
-            document.getElementById('player-section').style.display = 'none';
-            document.getElementById('nationality-section').style.display = 'none';
-            document.getElementById('club-section').style.display = 'none';
-            document.getElementById('add-player-section').style.display = 'none';
+
+        function showSection(section) {
+
+            document.getElementById('player-section').classList.add('hidden');
+            document.getElementById('add-player-section').classList.add('hidden');
+            document.getElementById('nationality-section').classList.add('hidden');
+            document.getElementById('club-section').classList.add('hidden');
             
-            // Show the selected section
-            document.getElementById(sectionId + '-section').style.display = 'block';
+            document.getElementById(`${section}-section`).classList.remove('hidden');
         }
 
-        // Initialize the page with player section visible
-        document.addEventListener('DOMContentLoaded', function() {
-            showSection('player');
-        });
     </script>
-
-    <?php
-    if (isset($_POST['submit'])) {
-        include('./assets/backend/config.php');
-        
-        // Handle file uploads
-        $image = $_FILES['image']['name'];
-        $flag = $_FILES['flag']['name'];
-        $logo = $_FILES['logo']['name'];
-        
-        // Move uploaded files
-        move_uploaded_file($_FILES['image']['tmp_name'], "uploads/players/" . $image);
-        move_uploaded_file($_FILES['flag']['tmp_name'], "uploads/flags/" . $flag);
-        move_uploaded_file($_FILES['logo']['tmp_name'], "uploads/logos/" . $logo);
-        
-        // Get other form data
-        $name = mysqli_real_escape_string($con, $_POST['name']);
-        $position = mysqli_real_escape_string($con, $_POST['position']);
-        $rating = mysqli_real_escape_string($con, $_POST['rating']);
-        $status = mysqli_real_escape_string($con, $_POST['status']);
-        $nationality = mysqli_real_escape_string($con, $_POST['nationality']);
-        $club = mysqli_real_escape_string($con, $_POST['club']);
-
-        // Insert nationality
-        $nation = "INSERT INTO nationnality (name_nationnality, flag) VALUES ('$nationality', 'uploads/flags/$flag')";
-        mysqli_query($con, $nation);
-        $nation_id = mysqli_insert_id($con);
-
-        // Insert club
-        $club_query = "INSERT INTO club (name_club, logo) VALUES ('$club', 'uploads/logos/$logo')";
-        mysqli_query($con, $club_query);
-        $club_id = mysqli_insert_id($con);
-
-        // Insert player
-        $sql = "INSERT INTO player (nom_player, photo, positions, rating, statuus, nationnality_id, club_id) 
-                VALUES ('$name', 'uploads/players/$image', '$position', '$rating', '$status', $nation_id, $club_id)";
-        
-        if(mysqli_query($con, $sql)) {
-            echo "<script>alert('Player added successfully!'); window.location.href='dashboard.php';</script>";
-        } else {
-            echo "<script>alert('Error adding player: " . mysqli_error($con) . "');</script>";
-        }
-    }
-    ?>
 </body>
 </html>
