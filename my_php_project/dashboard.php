@@ -63,7 +63,7 @@
                         <tbody class="text-gray-700">
                         <?php
                         include('./assets/backend/config.php');
-                            $query = "select * , player.id as test from player 
+                            $query = "select * , player.id as player_id from player 
                             INNER JOIN nationnality ON player.nationnality_id = nationnality.id 
                             INNER JOIN club ON player.club_id = club.id ;";
                             $query_run = mysqli_query($con, $query);
@@ -82,8 +82,8 @@
                                             <?= $row['statuus'] == 'principal' ? '<span class="text-green-600 font-semibold">principal</span>' : '<span class="text-red-600 font-semibold">reserve</span>'; '<span class="text-red-600 font-semibold">all</span>'?>
                                         </td>
                                         <td class="border px-4 py-2 text-center space-x-2">
-                                            <a href="edit.php?id=<? echo $row['id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
-                                            <a href="delete.php?id=<? echo $row['test']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
+                                            <a href="edit.php?id=<? echo $row['player_id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
+                                            <a href="delete.php?id=<? echo $row['player_id']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
                                         </td>
                                         </tr>
                                         <?php
