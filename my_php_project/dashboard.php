@@ -63,7 +63,7 @@
                         <tbody class="text-gray-700">
                         <?php
                         include('./assets/backend/config.php');
-                            $query = "select * from player 
+                            $query = "select * , player.id as test from player 
                             INNER JOIN nationnality ON player.nationnality_id = nationnality.id 
                             INNER JOIN club ON player.club_id = club.id ;";
                             $query_run = mysqli_query($con, $query);
@@ -83,7 +83,7 @@
                                         </td>
                                         <td class="border px-4 py-2 text-center space-x-2">
                                             <a href="edit.php?id=<? echo $row['id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
-                                            <a href="delete.php?id=<? echo $row['id']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
+                                            <a href="delete.php?id=<? echo $row['test']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
                                         </td>
                                         </tr>
                                         <?php
@@ -298,7 +298,7 @@
 
         // Insert player
         $sql = "INSERT INTO player (nom_player, photo, positions, rating, statuus, nationnality_id, club_id) 
-                VALUES ('$name', '$image', '$position', '$rating', '$status', $nation_id, $club_id)";
+                VALUES ('$name', 'uploads/players/$image', '$position', '$rating', '$status', $nation_id, $club_id)";
         
         if(mysqli_query($con, $sql)) {
             echo "<script>alert('Player added successfully!'); window.location.href='dashboard.php';</script>";
