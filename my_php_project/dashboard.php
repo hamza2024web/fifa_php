@@ -114,7 +114,7 @@
                         <tbody class="text-gray-700">
                             <?php
                                 include('./assets/backend/config.php');
-                                $query = "SELECT * FROM nationnality";
+                                $query = "SELECT * , nationnality.id as nationality_id FROM nationnality";
                                 $query_run = mysqli_query($con, $query);
                 
                                 if (mysqli_num_rows($query_run) > 0){
@@ -125,8 +125,8 @@
                                             <td class="border px-4 py-2"><?= $row['name_nationnality']; ?></td>
                                             <td class="border px-4 py-2"><img src="<?= $row['flag']; ?>" alt="nationnality flag" height="50px" width="50px"></td>
                                             <td class="border px-4 py-2 text-center space-x-2">
-                                                <a href="edit.php?id=<?= $row['id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
-                                                <a href="delete.php?id=<?= $row['id']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
+                                                <a href="edit.php?id=<?= $row['nationality_id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
+                                                <a href="delete.php?id_nationality=<?= $row['nationality_id']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
                                             </td>
                                         </tr>
                                         <?php
@@ -157,7 +157,7 @@
                         <tbody class="text-gray-700">
                             <?php
                                 include('./assets/backend/config.php');
-                                $query = "SELECT * FROM club";
+                                $query = "SELECT * , club.id as club_id FROM club";
                                 $query_run = mysqli_query($con, $query);
                 
                                 if (mysqli_num_rows($query_run) > 0){
@@ -168,8 +168,8 @@
                                             <td class="border px-4 py-2"><?= $row['name_club']; ?></td>
                                             <td class="border px-4 py-2"><img src="<?= $row['logo']; ?>" alt="club logo" height="50px" width="50px"></td>
                                             <td class="border px-4 py-2 text-center space-x-2">
-                                                <a href="edit.php?id=<?= $row['id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
-                                                <a href="delete.php?id=<?= $row['id']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
+                                                <a href="edit.php?id=<?= $row['club_id']; ?>" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Edit</a>
+                                                <a href="delete.php?id_club=<?= $row['club_id']; ?>" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition" onclick="return confirm('Are you sure?');">Delete</a>
                                             </td>
                                         </tr>
                                         <?php
